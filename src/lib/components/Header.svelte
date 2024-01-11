@@ -1,15 +1,27 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+
+	const goHome = () => {
+		goto('/');
+	};
+</script>
+
 <div class="wrapper">
-	<div class="image"><img src="logo.png" alt="" /></div>
+	<div class="image">
+		<a href="/">
+			<img src="logo.png" alt="" />
+		</a>
+	</div>
 	<div class="header">
 		<div class="wrap">
-			<div class="h-full">Information</div>
-			<div class="h-full">Calandar</div>
-			<div class="bg-red-500 h-full">Goslar</div>
+			<a class="h-full" href="/information">Information</a>
+			<a class="h-full" href="/calendar">Calendar</a>
+			<a class="bg-red-500 h-full" href="/goslar">Goslar</a>
 		</div>
 		<div class="wrap">
-			<div class="bg-red-500 h-full">Shaker</div>
-			<div class="h-full">Picture Book</div>
-			<div class="h-full">Through The Years</div>
+			<a class="bg-red-500 h-full" href="/shaker">Shaker</a>
+			<a class="h-full" href="/picture-book">Picture Book</a>
+			<a class="h-full" href="/through-the-years/2023"> Through The Years</a>
 		</div>
 	</div>
 </div>
@@ -20,17 +32,17 @@
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 
-	.wrap > div {
+	.wrap > a {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
 
-	.header > .wrap:first-child > div:last-child {
+	.header > .wrap:first-child > a:last-child {
 		color: white;
 	}
 
-	.header > .wrap:last-child > div:first-child {
+	.header > .wrap:last-child > a:first-child {
 		color: white;
 	}
 
@@ -55,13 +67,17 @@
 		left: 0;
 		position: absolute;
 		width: 100%;
-		height: 100%;
+		height: fit-content;
 		z-index: 1;
 	}
 
-	.image {
+	button {
 		position: relative;
 	}
+
+	/* .image {
+		position: relative;
+	} */
 
 	img {
 		position: absolute;
