@@ -51,11 +51,13 @@
 
 	.expanded > img {
 		width: auto;
-		height: 95vh;
+		height: auto;
+		max-width: 95vw;
+		max-height: 95vh;
 		position: fixed;
-		top: 2.5vh;
+		top: 50%;
 		left: 50%;
-		transform: translateX(-50%);
+		transform: translate(-50%, -50%);
 	}
 
 	.expanded {
