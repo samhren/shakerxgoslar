@@ -1,27 +1,54 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { Hamburger } from 'svelte-hamburgers';
 
-	const goHome = () => {
-		goto('/');
-	};
+	import { fade } from 'svelte/transition';
+
+	let open = false;
+
+	let size: number = 0;
+
+	$: {
+		if (size > 750) {
+			open = false;
+		}
+	}
+
+	function close() {
+		open = false;
+	}
 </script>
 
+<svelte:window bind:innerWidth={size} />
+
 <div class="wrapper">
-	<div class="image">
-		<a href="/">
-			<img src="logo.png" alt="" />
-		</a>
-	</div>
 	<div class="header">
 		<div class="wrap">
-			<a class="h-full" href="/information">Information</a>
-			<a class="h-full" href="/calendar">Calendar</a>
-			<a class="bg-red-500 h-full" href="/goslar">Goslar</a>
-		</div>
-		<div class="wrap">
-			<a class="bg-red-500 h-full" href="/shaker">Shaker</a>
-			<a class="h-full" href="/picture-book">Picture Book</a>
-			<a class="h-full" href="/through-the-years/2023"> Through The Years</a>
+			<a href="/information">Information</a>
+			<a href="/calendar">Calendar</a>
+			<a class="bg-red-500 text-white" href="/goslar">Goslar</a>
+			<div class="image">
+				<a href="/">
+					<img src="logo.png" alt="" />
+				</a>
+			</div>
+			<a class="bg-red-500 text-white" href="/shaker">Shaker</a>
+			<a href="/picture-book">Picture Book</a>
+			<a href="/through-the-years/2023"> Through The Years</a>
+			{#if size <= 750}
+				<div class="hamburger">
+					<Hamburger bind:open --color="white" --active-color="black" />
+				</div>
+				{#if open}
+					<div class="menu" transition:fade>
+						<a href="/information" on:click={close}>Information</a>
+						<a href="/calendar" on:click={close}>Calendar</a>
+						<a href="/goslar" on:click={close}>Goslar</a>
+						<a href="/shaker" on:click={close}>Shaker</a>
+						<a href="/picture-book" on:click={close}>Picture Book</a>
+						<a href="/through-the-years/2023" on:click={close}> Through The Years</a>
+					</div>
+				{/if}
+			{/if}
 		</div>
 	</div>
 </div>
@@ -29,21 +56,17 @@
 <style>
 	.wrap {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr minmax(80px, 120px) 1fr 1fr 1fr;
+		width: 100%;
 	}
 
 	.wrap > a {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-
-	.header > .wrap:first-child > a:last-child {
-		color: white;
-	}
-
-	.header > .wrap:last-child > a:first-child {
-		color: white;
+		background-color: white;
+		height: fit-content;
+		padding: 5px 0;
 	}
 
 	.header {
@@ -53,9 +76,35 @@
 		display: flex;
 	}
 
-	.header > div {
-		width: 43%;
-		background-color: white;
+	@media (max-width: 900px) {
+		.header {
+			font-size: small;
+		}
+	}
+
+	@media (max-width: 750px) {
+		.wrap > a {
+			display: none;
+		}
+
+		.hamburger {
+			right: 0;
+			top: 0;
+			position: absolute;
+			justify-content: center;
+			align-items: center;
+			z-index: 2;
+		}
+
+		.image {
+			width: 100px;
+		}
+	}
+
+	@media (max-width: 500px) {
+		.image {
+			width: 75px;
+		}
 	}
 
 	.header > div:first-child {
@@ -71,19 +120,24 @@
 		z-index: 1;
 	}
 
-	button {
-		position: relative;
+	.menu {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background-color: white;
+		display: flex;
+		flex-direction: column;
+		padding: 10px;
+		border: 1px solid #ccc;
 	}
 
-	/* .image {
-		position: relative;
-	} */
+	.menu a {
+		margin-bottom: 5px;
+	}
 
 	img {
-		position: absolute;
-		height: 80px;
-		left: 50%;
-		top: 5px;
-		transform: translateX(-50%);
+		width: auto;
+		transform: translateY(-25%);
 	}
 </style>

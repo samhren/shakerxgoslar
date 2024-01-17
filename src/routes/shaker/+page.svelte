@@ -1,4 +1,4 @@
-<div>
+<div class="centered">
 	Shaker Heights is a city located in Cuyahoga County, Ohio, United States. It is a suburb of
 	Cleveland and is known for its beautiful residential neighborhoods, historic architecture, and
 	tree-lined streets. The city was named after the Shakers, a religious sect that had a community in
@@ -11,8 +11,14 @@
 </div>
 
 <style>
-	div {
-		margin: 100px auto;
+	.centered {
+		margin: 23% auto;
+		font-size: 1.3em;
 		width: 80%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 100%;
+		vertical-align: middle;
 	}
 </style>

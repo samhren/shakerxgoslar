@@ -7,5 +7,6 @@ export default {
 			sans: ['Lato', 'sans-serif']
 		}
 	},
-	plugins: []
+	plugins: [],
+	important: true
 };

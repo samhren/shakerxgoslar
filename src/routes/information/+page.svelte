@@ -1,4 +1,4 @@
-<div>
+<div class="centered">
 	The Shaker Goslar exchange is the oldest partnership of a German and American school dating all
 	the way back to 1978. Every year since, students have embarked on a life-changing journey with the
 	Shaker Goslar Exchange Program, immersing in a unique cultural exchange, forging lasting
@@ -15,8 +15,14 @@
 </div>
 
 <style>
-	div {
-		margin: 100px auto;
+	.centered {
+		margin: 18% auto;
+		font-size: 1.3em;
 		width: 80%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 100%;
+		vertical-align: middle;
 	}
 </style>

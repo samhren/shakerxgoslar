@@ -1,4 +1,4 @@
-<div>
+<div class="centered">
 	Goslar is a historic town located in the Harz Mountains of Central Germany. It holds UNESCO World
 	Heritage status due to its well-preserved medieval architecture and its significance in German
 	history. The town is known for its charming half-timbered houses, cobblestone streets, and
@@ -11,8 +11,14 @@
 </div>
 
 <style>
-	div {
-		margin: 100px auto;
+	.centered {
+		margin: 23% auto;
+		font-size: 1.3em;
 		width: 80%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 100%;
+		vertical-align: middle;
 	}
 </style>
