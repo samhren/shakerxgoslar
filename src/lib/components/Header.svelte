@@ -3,7 +3,7 @@
 
 	import { fade } from 'svelte/transition';
 
-	import { clickOutside } from '../utils/clickOutside';
+	// import { clickOutside } from '../utils/clickOutside';
 
 	let open = false;
 
@@ -24,15 +24,15 @@
 		open = true;
 	}
 
-	function handleClickOutside() {
-		console.log('click outside');
-		if (size >= 760) {
-			open = false;
-		}
-		if (open) {
-			open = false;
-		}
-	}
+	// function handleClickOutside() {
+	// 	console.log('click outside');
+	// 	if (size >= 760) {
+	// 		open = false;
+	// 	}
+	// 	if (open) {
+	// 		open = false;
+	// 	}
+	// }
 </script>
 
 <svelte:window bind:innerWidth={size} />
@@ -56,7 +56,7 @@
 					<Hamburger bind:open --color="white" --active-color="black" />
 				</div>
 				{#if open}
-					<div class="menu" transition:fade use:clickOutside on:click_outside={handleClickOutside}>
+					<div class="menu" transition:fade>
 						<a href="/information" on:click={close}>Information</a>
 						<a href="/calendar" on:click={close}>Calendar</a>
 						<a href="/goslar" on:click={close}>Goslar</a>
