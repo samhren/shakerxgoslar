@@ -8,7 +8,7 @@
 	let size: number = 0;
 
 	$: {
-		if (size > 750) {
+		if (size > 760) {
 			open = false;
 		}
 	}
@@ -34,7 +34,7 @@
 			<a class="bg-red-500 text-white" href="/shaker">Shaker</a>
 			<a href="/picture-book">Picture Book</a>
 			<a href="/through-the-years/2023"> Through The Years</a>
-			{#if size <= 750}
+			{#if size <= 760}
 				<div class="hamburger">
 					<Hamburger bind:open --color="white" --active-color="black" />
 				</div>
@@ -76,13 +76,13 @@
 		display: flex;
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 910px) {
 		.header {
 			font-size: small;
 		}
 	}
 
-	@media (max-width: 750px) {
+	@media (max-width: 760px) {
 		.wrap > a {
 			display: none;
 		}
@@ -129,11 +129,15 @@
 		display: flex;
 		flex-direction: column;
 		padding: 10px;
-		border: 1px solid #ccc;
 	}
 
 	.menu a {
-		margin-bottom: 5px;
+		margin-bottom: 10px;
+		font-size: large;
+	}
+
+	.menu a:hover {
+		color: rgb(86, 86, 86);
 	}
 
 	img {

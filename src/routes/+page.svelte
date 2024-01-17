@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	let currentIndex = 0;
-	let interval: NodeJS.Timeout;
 
 	const slides = [
 		{ id: 1, image: 'slide1.jpg' },
@@ -11,6 +11,8 @@
 		{ id: 4, image: 'slide4.jpg' }
 	];
 
+	let interval: NodeJS.Timeout;
+
 	function startAutoScroll() {
 		console.log('start');
 		interval = setInterval(() => {
@@ -18,36 +20,11 @@
 		}, 3000);
 	}
 
-	function stopAutoScroll() {
-		console.log('stop');
-		clearInterval(interval);
-	}
-
 	onMount(() => {
 		startAutoScroll();
 	});
-	let showBox = false;
-
-	function expandBox() {
-		showBox = true;
-	}
-
-	function collapseBox() {
-		showBox = false;
-	}
 
 	let redRectangleVisible = false;
-
-	function handleMouseMove(event: MouseEvent) {
-		const carouselHeight = (event.target as HTMLElement).offsetHeight;
-		const mouseY = event.clientY - (event.target as HTMLElement).offsetTop;
-
-		if (mouseY > carouselHeight / 2) {
-			redRectangleVisible = true;
-		} else {
-			redRectangleVisible = false;
-		}
-	}
 
 	let showInstagramLinks = false;
 
@@ -58,9 +35,13 @@
 	function handleMouseOutFooter() {
 		showInstagramLinks = false;
 	}
+
+	let width: number = 0;
 </script>
 
-<div class="carousel" role="button" on:mousemove={handleMouseMove}>
+<svelte:window bind:innerWidth={width} />
+
+<div class="carousel">
 	{#each slides as slide, i (slide.id)}
 		<div class="slide" style="transform: translateX(-{currentIndex * 100}%)">
 			<img src={slide.image} alt={`Slide ${slide.id}`} />
@@ -72,7 +53,6 @@
 		</div>
 	{/if}
 </div>
-<div class={redRectangleVisible ? 'red-rectangle visible' : 'red-rectangle'}></div>
 <div class="locations">
 	<div>
 		<img src="locations/Goslar.png" alt="" />
@@ -87,58 +67,113 @@
 		<h3>Munich</h3>
 	</div>
 </div>
-<div class="links">
-	<a href="https://www.facebook.com/ShakerGoslarExchange" target="_blank">Facebook</a>
-	<div class="instagram-container" on:mouseover={handleMouseOverInstagram}>
-		{#if showInstagramLinks}
-			<div class="instagram-links">
-				<a href="https://instagram.com/link1">Link 1</a>
-				<a href="https://instagram.com/link2">Link 2</a>
-				<a href="https://instagram.com/link3">Link 3</a>
-				<!-- Add more links as needed -->
-			</div>
-		{/if}
-		<a href="https://instagram.com" class:hidden={showInstagramLinks}>Instagram</a>
+{#if width >= 1000}
+	<div class="links text-zinc-800">
+		<a
+			class="hover:text-zinc-400"
+			href="https://www.facebook.com/ShakerGoslarExchange"
+			target="_blank">Facebook</a
+		>
+		<div
+			class="instagram-container"
+			role="button"
+			tabindex="0"
+			on:mouseenter={handleMouseOverInstagram}
+			on:mouseleave={handleMouseOutFooter}
+		>
+			{#if showInstagramLinks}
+				<div
+					class="instagram-links"
+					in:fade={{ duration: 200, delay: 200 }}
+					out:fade={{ duration: 200, delay: 0 }}
+				>
+					<a class="hover:text-zinc-400" href="https://instagram.com/link1">2022</a>
+					<a class="hover:text-zinc-400" href="https://instagram.com/link2">2023</a>
+					<a class="hover:text-zinc-400" href="https://instagram.com/link3">2024</a>
+					<!-- Add more links as needed -->
+				</div>
+			{:else}
+				<a
+					href="https://instagram.com"
+					in:fade={{ duration: 200, delay: 200 }}
+					out:fade={{ duration: 200, delay: 0 }}>Instagram</a
+				>
+			{/if}
+		</div>
+		<a class="hover:text-zinc-400" href="https://twitter.com/shakerxgoslar23" target="_blank"
+			>Twitter</a
+		>
+		<a class="hover:text-zinc-400" href="https://www.shaker.org/" target="_blank"
+			>Shaker Heights City Schools</a
+		>
+		<a class="hover:text-zinc-400" href="https://ratsgymnasium-goslar.de/" target="_blank"
+			>Ratsgymnasium Goslar</a
+		>
 	</div>
-	<a href="https://twitter.com/shakerxgoslar23" target="_blank">Twitter</a>
-	<a href="https://www.shaker.org/" target="_blank">Shaker Heights City Schools</a>
-	<a href="https://ratsgymnasium-goslar.de/" target="_blank">Ratsgymnasium Goslar</a>
-</div>
+{:else}
+	<div class="links text-zinc-800">
+		<div>
+			<a
+				class="hover:text-zinc-400"
+				href="https://www.facebook.com/ShakerGoslarExchange"
+				target="_blank">Facebook</a
+			>
+			<div
+				class="instagram-container"
+				role="button"
+				tabindex="0"
+				on:mouseenter={handleMouseOverInstagram}
+				on:mouseleave={handleMouseOutFooter}
+			>
+				{#if showInstagramLinks}
+					<div
+						class="instagram-links"
+						in:fade={{ duration: 200, delay: 200 }}
+						out:fade={{ duration: 200, delay: 0 }}
+					>
+						<a class="hover:text-zinc-400" href="https://instagram.com/link1">2022</a>
+						<a class="hover:text-zinc-400" href="https://instagram.com/link2">2023</a>
+						<a class="hover:text-zinc-400" href="https://instagram.com/link3">2024</a>
+						<!-- Add more links as needed -->
+					</div>
+				{:else}
+					<a
+						href="https://instagram.com"
+						in:fade={{ duration: 200, delay: 200 }}
+						out:fade={{ duration: 200, delay: 0 }}>Instagram</a
+					>
+				{/if}
+			</div>
+			<a class="hover:text-zinc-400" href="https://twitter.com/shakerxgoslar23" target="_blank"
+				>Twitter</a
+			>
+		</div>
+		<div>
+			<a class="hover:text-zinc-400" href="https://www.shaker.org/" target="_blank"
+				>Shaker Heights City Schools</a
+			>
+			<a class="hover:text-zinc-400" href="https://ratsgymnasium-goslar.de/" target="_blank"
+				>Ratsgymnasium Goslar</a
+			>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.instagram-container {
 		height: 10vh;
-		width: 10vw;
+		/* width: 10vw; */
 	}
 	.instagram-links {
 		display: flex;
 		flex-direction: column;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
+		text-align: center;
 	}
 
 	.instagram-container:hover .instagram-links {
 		opacity: 1;
-	}
-
-	.hidden {
-		display: none;
-	}
-	.red-rectangle.grow {
-		height: 8%;
-	}
-	.red-rectangle {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 0;
-		transition: height 0.5s ease-in-out;
-		background-color: rgb(239 68 68);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		opacity: 1 !important;
 	}
 
 	.rectangle-text {
@@ -146,9 +181,6 @@
 		font-size: 2em;
 	}
 
-	.red-rectangle.visible {
-		transform: translateY(0);
-	}
 	.locations > div h3 {
 		transition: transform 0.6s ease-in-out;
 	}
@@ -168,16 +200,7 @@
 		transform: scale(1.15);
 		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 	}
-	.expanded-box {
-		display: flex;
-		flex-direction: column;
-		background-color: lightgray;
-		padding: 10px;
-	}
 
-	.expanded-box a {
-		margin-bottom: 5px;
-	}
 	.carousel {
 		width: 100%;
 		height: 100vh;
@@ -199,12 +222,6 @@
 		object-fit: cover;
 	}
 
-	img {
-		object-fit: cover;
-		width: initial;
-		height: 100%;
-	}
-
 	.locations {
 		height: 45vh;
 		background-color: white;
@@ -221,32 +238,8 @@
 		position: relative;
 	}
 
-	locations > div:hover::after {
-		content: '→';
-		position: absolute;
-		top: 50%;
-		left: 100%;
-		font-size: 2em;
-		opacity: 0;
-		transition: opacity 0.3s ease-in-out;
-		transition-delay: 0.6s; /* Delay the animation by the same duration as the locations hover grow-in animation */
-	}
-
-	.locations > div:nth-child(1):hover::after {
-		/* Arrow from the first to the second location */
-	}
-
-	.locations > div:nth-child(2):hover::after {
-		/* Arrow from the second to the third location */
-		transform: scaleX(-1);
-	}
-
-	.locations > div:nth-child(3):hover::after {
-		/* No arrow for the third location */
-		display: none;
-	}
-
 	.locations > div > img {
+		object-fit: cover;
 		height: 200px;
 		width: 200px;
 		border-radius: 50%;
@@ -260,19 +253,65 @@
 	}
 
 	.links {
-		display: flex;
+		text-align: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 2fr 2fr;
 		justify-content: space-around;
-		padding: 20px;
-		height: 20vh;
+		padding: 0 20px;
+		padding-top: 20px;
+		min-height: 20vh;
+		max-height: fit-content;
 		background-color: #f5f5f5;
 	}
 	.links a {
-		color: #1a0dab;
 		text-decoration: none;
 		font-size: 20px;
 		transition: color 0.3s ease;
 	}
-	.links a:hover {
-		color: #e86100;
+
+	@media (max-width: 650px) {
+		.locations > div > img {
+			height: 150px;
+			width: 150px;
+		}
+	}
+
+	@media (max-width: 500px) {
+		.locations > div > img {
+			height: 120px;
+			width: 120px;
+		}
+
+		.locations {
+			height: 35vh;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.links a {
+			font-size: 15px;
+		}
+	}
+
+	@media (max-width: 1000px) {
+		.links {
+			text-align: center;
+			width: 100%;
+			display: grid;
+			grid-template-rows: 1fr 1fr;
+			grid-template-columns: 1fr;
+		}
+
+		.links > div:first-child {
+			width: 100%;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+
+		.links > div:last-child {
+			width: 100%;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
 	}
 </style>
