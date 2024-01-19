@@ -1,8 +1,9 @@
 import photosJson from '$lib/photos.json';
+import { get } from 'svelte/store';
 
 export async function load({ params }) {
 	return {
-		photos: getPhotos()
+		getPhotos: getPhotos
 	};
 }
 
@@ -28,8 +29,8 @@ const getPhotos = () => {
 	// randomize the order of the photos
 	photos.sort(() => Math.random() - 0.5);
 
-	// Grab first 5
-	// photos.splice(5);
+	// Grab first 50
+	photos.splice(50);
 
 	return photos;
 };

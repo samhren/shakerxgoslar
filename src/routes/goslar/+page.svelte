@@ -10,9 +10,31 @@
 	seeking to explore Germany's medieval past and enjoy its scenic landscapes.
 </div>
 
+<div class="photos">
+	<img
+		src="https://www.niedersachsen-tourism.com/images/6b8zl8sxl2k-/c6133920edc1db6bb94f04b6e804e248.jpg"
+		alt="Town Center"
+	/>
+
+	<img
+		src="https://www.niedersachsen-tourism.com/images/gquwl8hqrqu-/rammelsberg-mine-in-goslar.jpg"
+		alt="Mine"
+	/>
+
+	<img
+		src="https://www.travelsewhere.net/wp-content/uploads/2020/03/DSC_0356-4.jpg"
+		alt="Goslar Street"
+	/>
+
+	<img
+		src="https://ratsgymnasium-goslar.de/wp-content/uploads/2022/11/IMG_8514-1-scaled.jpeg"
+		alt="Ratsgymnasium Goslar"
+	/>
+</div>
+
 <style>
 	.centered {
-		margin: 23% auto;
+		margin: 100px auto;
 		font-size: 1.3em;
 		width: 80%;
 		display: flex;
@@ -20,5 +42,18 @@
 		justify-content: center;
 		height: 100%;
 		vertical-align: middle;
+	}
+
+	.photos {
+		padding: 10px;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 20px;
+	}
+
+	.photos img {
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
 	}
 </style>

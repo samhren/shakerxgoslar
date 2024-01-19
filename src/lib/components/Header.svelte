@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Hamburger } from 'svelte-hamburgers';
+	import { page } from '$app/stores';
 
 	import { fade } from 'svelte/transition';
 
@@ -33,6 +34,16 @@
 	// 		open = false;
 	// 	}
 	// }
+
+	// If page is not / svelte
+
+	let home = true;
+
+	$: if ($page.url.pathname !== '/') {
+		home = true;
+	} else {
+		home = false;
+	}
 </script>
 
 <svelte:window bind:innerWidth={size} />
@@ -53,7 +64,11 @@
 			<a href="/through-the-years/2023"> Through The Years</a>
 			{#if size <= 760}
 				<div class="hamburger">
-					<Hamburger bind:open --color="white" --active-color="black" />
+					{#if home}
+						<Hamburger bind:open --color="grey" --active-color="black" />
+					{:else}
+						<Hamburger bind:open --color="white" --active-color="black" />
+					{/if}
 				</div>
 				{#if open}
 					<div class="menu" transition:fade>

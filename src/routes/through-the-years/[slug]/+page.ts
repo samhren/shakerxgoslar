@@ -1,7 +1,14 @@
 import { error } from '@sveltejs/kit';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '$lib/firebase';
-import photos from '$lib/photos.json';
+import photosJson from '$lib/photos.json';
+
+type Photo = {
+	url: string;
+	date: string;
+	year?: number; // Add the 'year' property to the type definition
+	expanded: boolean;
+};
 
 export async function load({ params }) {
 	const yearsRef = doc(firestore, 'years', params.slug);
@@ -40,6 +47,11 @@ const grabVideo = async (year: string) => {
 };
 
 const getPhotosByYear = (year: number) => {
+	const photos: Photo[] = photosJson.map((photo) => ({
+		...photo,
+		expanded: false
+	}));
+
 	let photosByYear = [];
 	for (const photo of photos) {
 		const date = new Date(photo.date);
